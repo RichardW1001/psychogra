@@ -11,20 +11,87 @@
     <title>Which one doesn't match?</title>
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/knockout-3.4.2.js"></script>
+    
+    <style>
+
+        div.choice {
+            float: left;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            width: 40vw;
+            height: 40vh;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #4d4d4d;
+            border-radius: 3px;
+        }
+
+        div.choice * {
+            padding: 3%;
+        }
+
+        div.choices {
+            display: block
+        }
+
+        /*ul.choices {
+            color: pink;
+            list-style-position: inside;
+            margin: 0;
+            padding: 0;
+            height: 80vh;
+            width: 100vw;
+        }
+
+        ul.choices li {
+            list-style-type: none;
+            height: 40vh;
+            width: 40vw;
+            margin: auto 0;
+            padding: 0;
+            float: left;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        ul.choices li span {
+            vertical-align: middle;
+        }
+
+        #controls {
+            height: 20vh;
+            text-align: center
+        }
+
+        #newGame {
+            background-color: aquamarine;
+            display: inline-block;
+        }*/
+
+    </style>
+
 </head>
 <body>
 <div>
       
     <div data-bind="if: Game">
         
-        <ul data-bind="foreach: Game().Options">
-            <li data-bind="click: $parent.ChooseOption"><span data-bind="text: Label"></span></li>
-        </ul>
+        <div class="choices" data-bind="foreach: Game().Options">
+            <div class="choice" data-bind="click: $parent.ChooseOption">
+                
+                <!--<span data-bind="text: Label"></span>-->
+                
+                <img data-bind="attr: { src: ImageUrl }" height="90%" width="90%" />
+
+            </div>
+        </div>
 
     </div>
     
-    <div>
-        <button data-bind="click: NewGame">Start a new game</button>
+    <div id="controls">
+        <button id="newGame" data-bind="click: NewGame">Start a new game</button>
     </div>
 
 </div>
