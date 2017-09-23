@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Which one doesn't match?</title>
+    <script src="/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="/Scripts/knockout-3.4.2.js"></script>
+
+    <link href="/Content/buttons.css" rel="stylesheet" />
+
+    <style>
+
+        div.choice {
+            float: left;
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            width: 40vw;
+            height: 40vh;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #4d4d4d;
+            border-radius: 3px;
+        }
+
+        div.choice * {
+            padding: 3%;
+        }
+
+        div.choices {
+            display: block
+        }
+
+        /*ul.choices {
+            color: pink;
+            list-style-position: inside;
+            margin: 0;
+            padding: 0;
+            height: 80vh;
+            width: 100vw;
+        }
+
+        ul.choices li {
+            list-style-type: none;
+            height: 40vh;
+            width: 40vw;
+            margin: auto 0;
+            padding: 0;
+            float: left;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        ul.choices li span {
+            vertical-align: middle;
+        }
+
+        #controls {
+            height: 20vh;
+            text-align: center
+        }
+
+        #newGame {
+            background-color: aquamarine;
+            display: inline-block;
+        }*/
+
+    </style>
+
+</head>
+<body>
+<div>
+      
+    <div data-bind="if: Game">
+        
+        <div class="choices" data-bind="foreach: Game().Options">
+            <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
+                
+                <!--<span data-bind="text: Label"></span>-->
+                
+                <img data-bind="attr: { src: imageUrl }" height="90%" width="90%" />
+
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="controls">
+        <button id="newGame" class="button orange" data-bind="click: NewGame">Start a new game</button>
+    </div>
+
+</div>
+    
+<script type="text/javascript">
+
+    (function() {
+
+        var GameViewModel = function(data) {
+            var self = this;
+
+            self.GameId = ko.observable(data.gameId);
+            self.Options = ko.observableArray(data.options);
+
+            return self;
+        }
+
+        var ViewModel = function() {
+            var self = this;
+
+            self.Game = ko.observable();
+
+            self.NewGame = function() {
+                $.get('/api/game/new').done(function(data) {
+                    self.Game(new GameViewModel(data));
+                });
+            }
+
+            self.ChooseOption = function (choice) {
+
+                $.post('/api/game/guess', { GameId: self.Game().GameId(), OptionId: choice.optionId }).done(
+                    function(result) {
+                        if (result === true) {
+                            alert('you win!');
+                        } else {
+                            alert('not quite, try again!');
+                        }
+                    });
+            }
+
+            self.RandomColor = function() {
+                var colors = [
+                    'orange',
+                    'red',
+                    'blue',
+                    'green',
+                    'gray',
+                    'pink'
+                ];
+
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            return self;
+        }
+
+        window.viewModel = new ViewModel();
+
+        ko.applyBindings(window.viewModel);
+
+        window.viewModel.NewGame();
+
+    })();
+
+</script>
+
+</body>
+</html>
