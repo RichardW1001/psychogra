@@ -11,7 +11,9 @@
     <title>Which one doesn't match?</title>
     <script src="~/Scripts/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/knockout-3.4.2.js"></script>
-    
+
+    <link href="~/Content/buttons.css" rel="stylesheet" />
+
     <style>
 
         div.choice {
@@ -79,7 +81,7 @@
     <div data-bind="if: Game">
         
         <div class="choices" data-bind="foreach: Game().Options">
-            <div class="choice" data-bind="click: $parent.ChooseOption">
+            <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
                 
                 <!--<span data-bind="text: Label"></span>-->
                 
@@ -91,7 +93,7 @@
     </div>
     
     <div id="controls">
-        <button id="newGame" data-bind="click: NewGame">Start a new game</button>
+        <button id="newGame" class="button orange" data-bind="click: NewGame">Start a new game</button>
     </div>
 
 </div>
@@ -130,6 +132,19 @@
                             alert('not quite, try again!');
                         }
                     });
+            }
+
+            self.RandomColor = function() {
+                var colors = [
+                    'orange',
+                    'red',
+                    'blue',
+                    'green',
+                    'gray',
+                    'pink'
+                ];
+
+                return colors[Math.floor(Math.random() * colors.length)];
             }
 
             return self;
