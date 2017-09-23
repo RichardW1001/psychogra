@@ -7,6 +7,9 @@
     <title>Document</title>
 
     <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
+
+    <link href=".\content\buttons.css" rel="stylesheet" />
+
     <style>
             
                     div.choice {
@@ -37,7 +40,8 @@
         <div>
                 
               <div id="game" data-bind="if: Game">
-                  
+                  <h1 data-bind="text: Instruction, click: ReadInstruction"></h1>
+
                   <div class="choices" data-bind="foreach: Game().options">
                       <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
                           

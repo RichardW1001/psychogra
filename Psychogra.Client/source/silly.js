@@ -94,19 +94,46 @@
 
         self.Game = ko.observable();
 
+        var instructions = [
+            'Which is not like the others?',
+            'Can you find the odd one out?'
+        ];
+
+        var instruction = randomElement(instructions);
+
+        self.Instruction = ko.observable(instruction)
+
+        self.ReadInstruction = function(){
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(self.Instruction()))
+        }
+
         self.NewGame = function() {
             self.Game(new OddOneOutGame())
         }
 
         self.ChooseOption = function (choice) {
 
+            var tryAgainMessages = [
+                'Not quite, try again',
+                'Have another go',
+                "That's not it"
+            ]
+
+            var wellDoneMessages = [
+                'Well done!',
+                "That's the one!",
+                "Nice!"
+            ]
+
             var result = self.Game().Guess(choice);
 
             if (result === true){
-                alert('you win');
+                var message = randomElement(wellDoneMessages);
+                window.speechSynthesis.speak(new SpeechSynthesisUtterance(message))
             }
             else{
-                alert('not quite')
+                var message = randomElement(tryAgainMessages);
+                window.speechSynthesis.speak(new SpeechSynthesisUtterance(message))
             }
         }
 
