@@ -5,6 +5,10 @@
     const settings = require('electron-settings')
     const ko = require('knockout')
 
+    const req = require('electron-require')
+
+    //const mod1 = require('./source/arrayHelpers.js')
+
     const shuffle = function (array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
       
