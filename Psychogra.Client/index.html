@@ -1,66 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<html>
+    <head>
+        <title>Our game!</title>
+        <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
+    </head>
+    <body>
+        <a href="oddOneOut.html">Odd One Out</a>
+        <a href="">Find The Item</a>
+        <a href="">Choose The Image</a>
+        <a href="">Choose The Name</a>
 
-    <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
+        <button data-bind="click: ChoosePath" >Choose your categories</button>
+        <p>Currently using data from <span data-bind="text: CurrentPath"></span></p>
 
-    <link href=".\content\buttons.css" rel="stylesheet" />
+        <script>
 
-    <style>
-            
-                    div.choice {
-                        float: left;
-                        display: table-cell;
-                        vertical-align: middle;
-                        text-align: center;
-                        width: 40vw;
-                        height: 40vh;
-                        margin-right: 15px;
-                        margin-bottom: 15px;
-                        border: 1px solid #4d4d4d;
-                        border-radius: 3px;
-                    }
-            
-                    div.choice * {
-                        padding: 3%;
-                    }
-            
-                    div.choices {
-                        display: block
-                    }
-            
-                </style>
-</head>
-<body>
+(function(){
 
-        <div>
-                
-              <div id="game" data-bind="if: Game">
-                  <h1 data-bind="text: Instruction, click: ReadInstruction"></h1>
+var ViewModel = function(){
+    var self = this;
 
-                  <div class="choices" data-bind="foreach: Game().options">
-                      <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
-                          
-                          <!--<span data-bind="text: Label"></span>-->
-                          
-                          <img data-bind="attr: { src: imageUrl }" height="90%" width="90%" />
-          
-                      </div>
-                  </div>
-          
-              </div>
-              
-              <div id="controls">
-                  <button id="newGame" class="button orange" data-bind="click: NewGame">Start a new game</button>
-              </div>
-          
-          </div>
+    var settings = require('electron-settings');
+    var dialog = require('electron').remote.dialog;
 
-<script src=".\source\silly.js"></script>
+    var currentPath = settings.get('rootPath');
 
-</body>
+    self.CurrentPath = ko.observable(currentPath);
+
+    self.ChoosePath = function(){
+
+    var rootPath = dialog.showOpenDialog({
+        properties: ['openDirectory']
+    });
+
+    settings.set('rootPath', rootPath);
+
+    self.CurrentPath(rootPath);
+
+    }
+
+    return self;
+}
+
+ko.applyBindings(new ViewModel())
+
+})();
+
+        </script>
+    </body>
 </html>

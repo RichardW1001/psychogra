@@ -1,8 +1,9 @@
 const fs = require('fs')
+const settings = require('electron-settings')
 const join = require('path').join
 
 const getCategories = function(){
-    const path = 'C:\\Users\\Richard\\Desktop\\Demo data'
+    const path = settings.get('rootPath');
   
     var getItems = function(d){
       return fs.readdirSync(join(path, d)).
