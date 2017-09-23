@@ -5,6 +5,7 @@
     <title>Which one doesn't match?</title>
     <script src="/Scripts/jquery-3.2.1.min.js"></script>
     <script src="/Scripts/knockout-3.4.2.js"></script>
+    <script src="/Scripts/jquery.fireworks.js"></script>
 
     <link href="/Content/buttons.css" rel="stylesheet" />
 
@@ -31,55 +32,20 @@
             display: block
         }
 
-        /*ul.choices {
-            color: pink;
-            list-style-position: inside;
-            margin: 0;
-            padding: 0;
-            height: 80vh;
-            width: 100vw;
-        }
-
-        ul.choices li {
-            list-style-type: none;
-            height: 40vh;
-            width: 40vw;
-            margin: auto 0;
-            padding: 0;
-            float: left;
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        ul.choices li span {
-            vertical-align: middle;
-        }
-
-        #controls {
-            height: 20vh;
-            text-align: center
-        }
-
-        #newGame {
-            background-color: aquamarine;
-            display: inline-block;
-        }*/
-
     </style>
 
 </head>
 <body>
 <div>
       
-    <div data-bind="if: Game">
+    <div id="game" data-bind="if: Game">
         
         <div class="choices" data-bind="foreach: Game().Options">
             <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
                 
                 <!--<span data-bind="text: Label"></span>-->
                 
-                <img data-bind="attr: { src: ImageUrl }" height="90%" width="90%" />
+                <img data-bind="attr: { src: imageUrl }" height="90%" width="90%" />
 
             </div>
         </div>
@@ -99,8 +65,8 @@
         var GameViewModel = function(data) {
             var self = this;
 
-            self.GameId = ko.observable(data.GameId);
-            self.Options = ko.observableArray(data.Options);
+            self.GameId = ko.observable(data.gameId);
+            self.Options = ko.observableArray(data.options);
 
             return self;
         }
@@ -111,17 +77,24 @@
             self.Game = ko.observable();
 
             self.NewGame = function() {
-                $.get('/api/game/new').done(function(data) {
+                $.get('/api/games/oddoneout/new').done(function(data) {
                     self.Game(new GameViewModel(data));
                 });
             }
 
             self.ChooseOption = function (choice) {
 
-                $.post('/api/game/guess', { GameId: self.Game().GameId(), OptionId: choice.OptionId }).done(
+                $.post('/api/games/oddoneout/guess', { GameId: self.Game().GameId(), OptionId: choice.optionId }).done(
                     function(result) {
                         if (result === true) {
                             alert('you win!');
+
+                            $('body').fireworks('init');
+
+                            setTimeout(function(){
+                                $('body').fireworks('destroy');
+                            }, 5000);
+
                         } else {
                             alert('not quite, try again!');
                         }

@@ -2,7 +2,7 @@
 
 namespace Psychogra.Controllers
 {
-    public class Game
+    public class OddOneOutGame
     {
         public int GameId { get; set; }
         public IEnumerable<Option> Options { get; set; }

@@ -32,8 +32,8 @@ namespace Psycogra.CoreWeb
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
             app.UseDefaultFiles();
+            app.UseStaticFiles();
 
             app.UseMvc();
         }
