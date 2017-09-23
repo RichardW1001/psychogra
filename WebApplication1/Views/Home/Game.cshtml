@@ -1,0 +1,82 @@
+﻿@model dynamic
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Which one doesn't match?</title>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+</head>
+<body>
+<div>
+      
+    <div data-bind="if: Game">
+        
+        <ul data-bind="foreach: Game().Options">
+            <li data-bind="click: $parent.ChooseOption"><span data-bind="text: Label"></span></li>
+        </ul>
+
+    </div>
+    
+    <div>
+        <button data-bind="click: NewGame">Start a new game</button>
+    </div>
+
+</div>
+    
+<script type="text/javascript">
+
+    (function() {
+
+        var GameViewModel = function(data) {
+            var self = this;
+
+            self.GameId = ko.observable(data.GameId);
+            self.Options = ko.observableArray(data.Options);
+
+            return self;
+        }
+
+        var ViewModel = function() {
+            var self = this;
+
+            self.Game = ko.observable();
+
+            self.NewGame = function() {
+                $.get('/api/game/new').done(function(data) {
+                    self.Game(new GameViewModel(data));
+                });
+            }
+
+            self.ChooseOption = function (choice) {
+
+                $.post('/api/game/guess', { GameId: self.Game().GameId(), OptionId: choice.OptionId }).done(
+                    function(result) {
+                        if (result === true) {
+                            alert('you win!');
+                        } else {
+                            alert('not quite, try again!');
+                        }
+                    });
+            }
+
+            return self;
+        }
+
+        window.viewModel = new ViewModel();
+
+        ko.applyBindings(window.viewModel);
+
+        window.viewModel.NewGame();
+
+    })();
+
+</script>
+
+</body>
+</html>
