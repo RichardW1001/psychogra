@@ -1,14 +1,13 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Psychogra.Controllers;
 
 namespace Psycogra.CoreWeb.Controllers
 {
     public class MultipleChoiceController : Controller
     {
         private static int _nextGameId = 1;
-        private readonly DataStore _dataStore = new DataStore();
+        private readonly ICategoryStore _categoryStore = new DiskCategoryStore(@"C:\Users\Richard\Desktop\Demo data");
 
         [Route("api/multiplechoice/new")]
         public MultipleChoiceGame NewGame()
@@ -17,7 +16,7 @@ namespace Psycogra.CoreWeb.Controllers
 
             var totalNumberOfOptions = 3;
 
-            var category = Enumerable.OrderBy<Category, Guid>(_dataStore.CategoryOptions, x => Guid.NewGuid()).
+            var category = _categoryStore.Categories().OrderBy(x => Guid.NewGuid()).
                 First();
 
             var primaryOption = category.Options.OrderBy(x => Guid.NewGuid()).First();
@@ -33,7 +32,7 @@ namespace Psycogra.CoreWeb.Controllers
 
             var game = new MultipleChoiceGame
             {
-                GameId = _nextGameId,
+                GameId = _nextGameId.ToString(),
                 PrimaryOption = primaryOption,
                 Options = options
             };
@@ -45,7 +44,7 @@ namespace Psycogra.CoreWeb.Controllers
 
         [HttpPost]
         [Route("api/multiplechoice/guess")]
-        public bool Guess(int gameId, int choiceId)
+        public bool Guess(string gameId, string choiceId)
         {
             var game = DataStore.MultipleChoiceGames.First(g => g.GameId == gameId);
 

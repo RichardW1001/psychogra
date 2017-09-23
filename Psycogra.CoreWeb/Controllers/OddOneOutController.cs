@@ -9,7 +9,7 @@ namespace Psycogra.CoreWeb.Controllers
     {
         private static int _nextGameId = 1;
 
-        private readonly DataStore _dataStore = new DataStore();
+        private readonly ICategoryStore _categoryStore = new DiskCategoryStore(@"C:\Users\Richard\Desktop\Demo data");
 
         [HttpGet]
         [Route("api/games/oddoneout/new")]
@@ -17,10 +17,10 @@ namespace Psycogra.CoreWeb.Controllers
         {
             var setSize = 4;
 
-            var mainSet = Enumerable.OrderBy<Category, Guid>(_dataStore.CategoryOptions, x => Guid.NewGuid()).
+            var mainSet = _categoryStore.Categories().OrderBy(x => Guid.NewGuid()).
                 First();
 
-            var oddOneOut = Enumerable.Where<Category>(_dataStore.CategoryOptions, c => c.CategoryId != mainSet.CategoryId).
+            var oddOneOut = _categoryStore.Categories().Where(c => c.CategoryId != mainSet.CategoryId).
                 SelectMany(c => c.Options).
                 OrderBy(x => Guid.NewGuid()).
                 First();
@@ -29,7 +29,7 @@ namespace Psycogra.CoreWeb.Controllers
 
             var newGame = new OddOneOutGame
             {
-                GameId = _nextGameId,
+                GameId = _nextGameId.ToString(),
                 Options = mainSet.Options.
                     OrderBy(x => Guid.NewGuid()).Take(setSize - 1).
                     Union(new[] { oddOneOut }).
@@ -43,8 +43,8 @@ namespace Psycogra.CoreWeb.Controllers
 
         public class GuessViewModel
         {
-            public int GameId { get; set; }
-            public int OptionId { get; set; }
+            public string GameId { get; set; }
+            public string OptionId { get; set; }
         }
 
         [HttpPost]
@@ -54,13 +54,13 @@ namespace Psycogra.CoreWeb.Controllers
             //look up game
             //look up the option, and which set it's from
 
-            var sets = Enumerable.SelectMany(_dataStore.CategoryOptions, c => Enumerable.Select(c.Options, o => new { CategoryId = c.CategoryId, OptionId = o.OptionId })).ToList();
+            var sets = _categoryStore.Categories().SelectMany(c => c.Options.Select(o => new { CategoryId = c.CategoryId, OptionId = o.OptionId })).ToList();
 
-            var game = Enumerable.First<OddOneOutGame>(DataStore.OddOneOutGames, g => g.GameId == model.GameId);
+            var game = DataStore.OddOneOutGames.First(g => g.GameId == model.GameId);
 
             var gameSets = game.Options.
                 Join(sets, o => o.OptionId, x => x.OptionId, (o, x) => x.CategoryId).
-                GroupBy<int, int>(x => x);
+                GroupBy(x => x);
 
             var chosenOption = sets.First(x => x.OptionId == model.OptionId);
 

@@ -1,0 +1,16 @@
+{
+  "name": "psychogra.client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-prebuilt": "^1.4.13",
+    "electron-settings": "^3.1.1",
+    "knockout": "^3.4.2"
+  }
+}
