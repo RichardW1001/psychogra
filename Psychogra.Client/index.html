@@ -22,7 +22,8 @@ var ViewModel = function(){
     var settings = require('electron-settings');
     var dialog = require('electron').remote.dialog;
 
-    var currentPath = settings.get('rootPath')[0];
+    var currentPath = settings.has('rootPath') ?
+        settings.get('rootPath') : 'Not configured yet!!!';
 
     self.CurrentPath = ko.observable(currentPath);
 
