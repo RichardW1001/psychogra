@@ -22,7 +22,7 @@ var ViewModel = function(){
     var settings = require('electron-settings');
     var dialog = require('electron').remote.dialog;
 
-    var currentPath = settings.get('rootPath');
+    var currentPath = settings.get('rootPath')[0];
 
     self.CurrentPath = ko.observable(currentPath);
 

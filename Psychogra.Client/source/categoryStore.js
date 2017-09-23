@@ -3,7 +3,7 @@ const settings = require('electron-settings')
 const join = require('path').join
 
 const getCategories = function(){
-    const path = settings.get('rootPath');
+    const path = settings.get('rootPath')[0];
   
     var getItems = function(d){
       return fs.readdirSync(join(path, d)).
