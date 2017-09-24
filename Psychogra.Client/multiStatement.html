@@ -23,7 +23,11 @@
         </div>
 
         <div id="choices" data-bind="foreach: Game().options">
-            <p data-bind="text: label, click: $parent.ChooseOption" />
+            <p>
+                <img src=".\content\sound-icon.png" data-bind="click: function() { window.speechSynthesis.speak(new SpeechSynthesisUtterance(label)) }" style="height: 2%; width: 2%; margin-right: 10px" />
+                <span data-bind="text: label, click: $parent.ChooseOption" />
+            </p>
+            
         </div>
     </div>
 

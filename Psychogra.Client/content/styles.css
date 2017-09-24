@@ -68,6 +68,10 @@ body {
     vertical-align: center;
 }
 
+#choices p {
+    margin: 3px;
+}
+
 #choices button span {
     font-size: xx-large;
 }
