@@ -13,6 +13,7 @@
 
         self.Game = ko.observable();
         self.Instruction = ko.observable();
+        self.WellDoneMessage = ko.observable();
 
         self.ReadInstruction = function(){
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(self.Instruction()))
@@ -43,15 +44,21 @@
 
             var wellDoneMessages = [
                 'Well done!',
-                "That's the one!",
                 "Nice!"
             ]
 
             var result = self.Game().Guess(choice);
 
             if (result === true) {
+                var sound = new Audio('./sounds/Ta Da-SoundBible.com-1884170640.wav');
+                sound.play();
+
                 var message = arrayHelpers.randomElement(wellDoneMessages);
-                window.speechSynthesis.speak(new SpeechSynthesisUtterance(message))
+                self.WellDoneMessage(message);
+
+                setTimeout(function(){
+                    self.WellDoneMessage(undefined);
+                }, 5000)
             }
             else {
                 var message = arrayHelpers.randomElement(tryAgainMessages);
@@ -59,17 +66,8 @@
             }
         }
 
-        self.RandomColor = function () {
-            var colors = [
-                'orange',
-                'red',
-                'blue',
-                'green',
-                'gray',
-                'pink'
-            ];
-
-            return arrayHelpers.randomElement(colors);
+        self.Menu = function(){
+            window.location = 'index.html'
         }
 
         return self;

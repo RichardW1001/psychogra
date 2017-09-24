@@ -8,57 +8,29 @@
 
     <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
 
-    <link href=".\content\buttons.css" rel="stylesheet" />
+    <link href=".\content\styles.css" rel="stylesheet" />
 
-    <style>
-            
-                    div.choice {
-                        float: left;
-                        display: table-cell;
-                        vertical-align: middle;
-                        text-align: center;
-                        width: 40vw;
-                        height: 40vh;
-                        margin-right: 15px;
-                        margin-bottom: 15px;
-                        border: 1px solid #4d4d4d;
-                        border-radius: 3px;
-                    }
-            
-                    div.choice * {
-                        padding: 3%;
-                    }
-            
-                    div.choices {
-                        display: block
-                    }
-            
-                </style>
 </head>
 <body>
 
-        <div>
-                
-              <div id="game" data-bind="if: Game">
-                  <h1 data-bind="text: Instruction, click: ReadInstruction"></h1>
+    <div id="game" data-bind="if: Game">
+        <h1 id="instruction" data-bind="text: Instruction, click: ReadInstruction"></h1>
 
-                  <div class="choices" data-bind="foreach: Game().options">
-                      <div class="choice button" data-bind="click: $parent.ChooseOption, css: $parent.RandomColor()">
-                          
-                          <!--<span data-bind="text: Label"></span>-->
-                          
-                          <img data-bind="attr: { src: imageUrl }" height="90%" width="90%" />
-          
-                      </div>
-                  </div>
-          
-              </div>
-              
-              <div id="controls">
-                  <button id="newGame" class="button orange" data-bind="click: NewGame">Start a new game</button>
-              </div>
-          
-          </div>
+        <div id="images" data-bind="foreach: Game().options">
+            <button data-bind="click: $parent.ChooseOption">
+                          <img data-bind="attr: { src: imageUrl }" />
+                      </button>
+        </div>
+    </div>
+
+    <div id="nav">
+        <button class="blue" data-bind="click: Menu">Back to Menu</button>
+        <button class="green" data-bind="click: NewGame">Start a New Game</button>
+    </div>
+
+    <div id="wellDone" data-bind="visible: WellDoneMessage">
+        <span data-bind="text: WellDoneMessage"></span>
+    </div>
 
 <script src=".\source\multiImageLoader.js"></script>
 

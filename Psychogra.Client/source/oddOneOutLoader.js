@@ -75,17 +75,6 @@
             return colors[index];
         }
 
-        self.RandomColor = function() {
-            var colors = [
-                'yellow',
-                'red',
-                'blue',
-                'green'
-            ];
-
-            return arrayHelpers.randomElement(colors);
-        }
-
         self.Menu = function(){
             window.location = 'index.html'
         }

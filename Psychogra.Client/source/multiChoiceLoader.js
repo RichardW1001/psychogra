@@ -67,6 +67,10 @@
     
                 return arrayHelpers.randomElement(colors);
             }
+
+            self.Menu = function(){
+                window.location = 'index.html'
+            }
     
             return self;
         }
