@@ -12,6 +12,7 @@
         var self = this;
 
         self.Game = ko.observable();
+        self.WellDoneMessage = ko.observable();
 
         var instructions = [
             'Which is not like the others?',
@@ -47,8 +48,19 @@
             var result = self.Game().Guess(choice);
 
             if (result === true){
+
+                var sound = new Audio('./sounds/Ta Da-SoundBible.com-1884170640.wav');
+                sound.play();
+
                 var message = arrayHelpers.randomElement(wellDoneMessages);
-                window.speechSynthesis.speak(new SpeechSynthesisUtterance(message))
+                self.WellDoneMessage(message);
+
+                // $('body').fireworks('init');
+
+                // setTimeout(function(){
+                //     self.WellDoneMessage(undefined);
+                //     $('body').fireworks('destroy');
+                // }, 5000)
             }
             else{
                 var message = arrayHelpers.randomElement(tryAgainMessages);
@@ -58,15 +70,17 @@
 
         self.RandomColor = function() {
             var colors = [
-                'orange',
+                'yellow',
                 'red',
                 'blue',
-                'green',
-                'gray',
-                'pink'
+                'green'
             ];
 
             return arrayHelpers.randomElement(colors);
+        }
+
+        self.Menu = function(){
+            window.location = 'index.html'
         }
 
         return self;

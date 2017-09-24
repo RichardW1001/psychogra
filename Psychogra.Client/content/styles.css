@@ -1,0 +1,85 @@
+* {
+    font-family: 'Comic Sans MS';
+}
+
+body {
+    /* background: linear-gradient(to bottom right, #b7ffb7, white, #b7ffb7); */
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+#instruction {
+    text-align: center;
+    font-size: larger;
+}
+
+#images {
+    width: 80vw;
+    height: 80vh;
+    margin: 0 auto;
+    text-align: center
+}
+
+    #images button {
+        display: inline-block;
+        width: 40%;
+        height: 40%;
+        padding: 1%;
+        margin: 1%;
+        border-radius: 3%;
+    }
+
+        #images button img {
+            height: 90%;
+            width: 90%;
+            border-radius: 3%;
+        }
+
+button.blue {
+    background: linear-gradient(to bottom right, cornflowerblue, blue);
+}
+
+button.yellow {
+    background: linear-gradient(to bottom right, yellow, goldenrod);
+}
+
+button.red {
+    background: linear-gradient(to bottom right, red, darkred);
+}
+
+button.green {
+    background: linear-gradient(to bottom right, greenyellow, green);
+}
+
+#nav {
+    text-align: center;
+}
+
+    #nav button {
+        color: white;
+        font-size: large;
+        border-radius: 15px;
+        padding: 15px;
+        width: 20%;
+        margin: 0 30px;
+    }
+
+#wellDone {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+}
+
+    #wellDone span {
+        font-weight: bold;
+        font-family: 'Comic Sans MS';
+        background: linear-gradient(to bottom, red, orange, yellow, green, cyan, blue, violet);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 60px;
+        line-height: 60px;
+    }
