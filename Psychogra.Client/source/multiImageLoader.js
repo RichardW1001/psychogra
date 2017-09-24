@@ -25,7 +25,7 @@
 
             var instructions = [
                 'Which is the ' + item + '?',
-                'Can you find the' + item + '?'
+                'Can you find the ' + item + '?'
             ];
 
             var instruction = arrayHelpers.randomElement(instructions);

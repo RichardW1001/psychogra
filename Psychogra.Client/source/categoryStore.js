@@ -13,7 +13,7 @@ const getCategories = function(){
           return {
             itemId: join(path, d, f),
             imageUrl: join(path, d, f),
-            label: f
+            label: f.substr(0, f.lastIndexOf('.'))
           }
         })
     }
