@@ -1,60 +1,73 @@
 <html>
-    <head>
-        <title>Plac zabaw!</title>
-        <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
 
-        <style>
+<head>
+    <title>Plac zabaw!</title>
+    <script src=".\node_modules\knockout\build\output\knockout-latest.js"></script>
 
-.home {
-    background-color: #edd7ff
-}
+    <link href=".\content\styles.css" rel="stylesheet" />
 
-        </style>
-    </head>
-    <body class="home">
-        <script src='https://cdn.html5maker.com/embed.js?id=639edf825e8f1cd4a5497dc68f8aa1a637b74955a66f&responsive=1&width=940&height=400&h5mTag=html5maker'></script>
-        <a href="oddOneOut.html"><img src="buttons/game1.png" style="width:160px"></a>
-        <a href="whichIs.html"><img src="buttons/game2.png" style="width:160px"></a>
-        <a href="multiImage.html"><img src="buttons/game3.png" style="width:160px"></a>
-        <a href="multiChoice.html"><img src="buttons/game4.png" style="width:160px"></a>
+    <style>
+        .home {
+            background-color: #edd7ff
+        }
+    </style>
+</head>
 
-        <button data-bind="click: ChoosePath" >Choose your categories</button>
+<body class="home">
+    <script src='https://cdn.html5maker.com/embed.js?id=639edf825e8f1cd4a5497dc68f8aa1a637b74955a66f&responsive=1&width=940&height=400&h5mTag=html5maker'></script>
+
+    <section id="nav">
+        <button class="red">
+            <a href="oddOneOut.html"><img src="buttons/game1.png" style="width:160px"></a>
+        </button>
+        <button class="blue">
+            <a href="whichIs.html"><img src="buttons/game2.png" style="width:160px"></a>
+        </button>
+        <button class="green">
+            <a href="multiImage.html"><img src="buttons/game3.png" style="width:160px"></a>
+        </button>
+        <button class="yellow">
+            <a href="multiChoice.html"><img src="buttons/game4.png" style="width:160px"></a>
+        </button>
+    </section>
+    <section id="setup">
+        <button class="blue" data-bind="click: ChoosePath">Choose your categories</button>
         <p>Currently using data from <span data-bind="text: CurrentPath"></span></p>
+    </section>
 
-        <script>
+    <script>
+        (function () {
 
-(function(){
+            var ViewModel = function () {
+                var self = this;
 
-var ViewModel = function(){
-    var self = this;
+                var settings = require('electron-settings');
+                var dialog = require('electron').remote.dialog;
 
-    var settings = require('electron-settings');
-    var dialog = require('electron').remote.dialog;
+                var currentPath = settings.has('rootPath') ?
+                    settings.get('rootPath') : 'Not configured yet!!!';
 
-    var currentPath = settings.has('rootPath') ?
-        settings.get('rootPath') : 'Not configured yet!!!';
+                self.CurrentPath = ko.observable(currentPath);
 
-    self.CurrentPath = ko.observable(currentPath);
+                self.ChoosePath = function () {
 
-    self.ChoosePath = function(){
+                    var rootPath = dialog.showOpenDialog({
+                        properties: ['openDirectory']
+                    });
 
-    var rootPath = dialog.showOpenDialog({
-        properties: ['openDirectory']
-    });
+                    settings.set('rootPath', rootPath);
 
-    settings.set('rootPath', rootPath);
+                    self.CurrentPath(rootPath);
 
-    self.CurrentPath(rootPath);
+                }
 
-    }
+                return self;
+            }
 
-    return self;
-}
+            ko.applyBindings(new ViewModel())
 
-ko.applyBindings(new ViewModel())
+        })();
+    </script>
+</body>
 
-})();
-
-        </script>
-    </body>
 </html>

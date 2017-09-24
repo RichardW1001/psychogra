@@ -102,7 +102,7 @@ button.green, #images :nth-child(4), #choices :nth-child(4) {
         border-radius: 15px;
         padding: 15px;
         width: 20%;
-        margin: 0 30px;
+        margin: 0 20px;
     }
 
 #wellDone {
@@ -125,4 +125,18 @@ button.green, #images :nth-child(4), #choices :nth-child(4) {
         -webkit-text-fill-color: transparent;
         font-size: 60px;
         line-height: 60px;
+    }
+
+#setup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+    #setup button {
+        color: white;
+        font-size: large;
+        border-radius: 15px;
+        padding: 15px;
+        width: 20%;
+        margin: 0 20px;
     }
