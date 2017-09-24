@@ -40,6 +40,18 @@
 
     <script src=".\source\multiChoiceLoader.js"></script>
 
+    <script>
+        (function(){
+            var settings = require('electron-settings');
+            var useNeutralColors = settings.has('useNeutralColors') ?
+                        settings.get('useNeutralColors') : false;
+    
+            if (useNeutralColors){
+                document.body.insertAdjacentHTML('beforeend', '<link href=".\\content\\neutralColors.css" rel="stylesheet" ></link>')
+            }
+        })();
+    </script>
+
 </body>
 
 </html>

@@ -36,6 +36,7 @@
     <section id="setup">
         <button class="blue" data-bind="click: ChoosePath">Choose your categories</button>
         <p>Currently using data from <span data-bind="text: CurrentPath"></span></p>
+        <p>Use neutral colors? <input type="checkbox" data-bind="checked: NeutralColors" /></p>
     </section>
 
     <script>
@@ -64,6 +65,15 @@
 
                 }
 
+                var useNeutralColors = settings.has('useNeutralColors') ?
+                    settings.get('useNeutralColors') : false;
+
+                self.NeutralColors = ko.observable(useNeutralColors);
+
+                self.NeutralColors.subscribe(function(x) {
+                    settings.set('useNeutralColors', x)
+                })
+
                 return self;
             }
 
@@ -71,6 +81,7 @@
 
         })();
     </script>
+
 </body>
 
 </html>
