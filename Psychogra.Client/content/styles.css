@@ -32,10 +32,6 @@ body {
         border-radius: 3%;
     }
 
-    #images button :nth-child(1) {
-        background: linear-gradient(to bottom right, cornflowerblue, blue);
-    }
-
         #images button img {
             height: 90%;
             width: 90%;
@@ -76,19 +72,19 @@ body {
     font-size: xx-large;
 }
 
-button.blue, #images :nth-child(1), #choices :nth-child(1) {
+button.blue, #images button:nth-of-type(1), #choices button:nth-of-type(1) {
     background: linear-gradient(to bottom right, cornflowerblue, blue);
 }
 
-button.yellow, #images :nth-child(2), #choices :nth-child(2) {
+button.yellow, #images button:nth-of-type(2), #choices button:nth-of-type(2) {
     background: linear-gradient(to bottom right, yellow, goldenrod);
 }
 
-button.red, #images :nth-child(3), #choices :nth-child(3) {
+button.red, #images button:nth-of-type(3), #choices button:nth-of-type(3) {
     background: linear-gradient(to bottom right, red, darkred);
 }
 
-button.green, #images :nth-child(4), #choices :nth-child(4) {
+button.green, #images button:nth-of-type(4), #choices button:nth-of-type(4) {
     background: linear-gradient(to bottom right, greenyellow, green);
 }
 
