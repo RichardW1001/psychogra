@@ -3,9 +3,12 @@
 }
 
 body {
+    background-color: #f4fff5;
     /* background: linear-gradient(to bottom right, #b7ffb7, white, #b7ffb7); */
-    background-repeat: no-repeat;
-    height: 100%;
+}
+
+#app {
+    
 }
 
 #instruction {
@@ -29,25 +32,63 @@ body {
         border-radius: 3%;
     }
 
+    #images button :nth-child(1) {
+        background: linear-gradient(to bottom right, cornflowerblue, blue);
+    }
+
         #images button img {
             height: 90%;
             width: 90%;
             border-radius: 3%;
         }
 
-button.blue {
+#mainImage {
+    width: 60vw;
+    height: 60vh;
+    margin: 0 auto;
+    text-align: center
+}
+
+#mainImage img {
+    height: 90%;
+    width: 90%;
+}
+
+#choices {
+    width: 80vw;
+    height: 20vh;
+    margin: 0 auto;
+    text-align: center
+}
+
+#choices button {
+    display: inline-block;
+    width: 40%;
+    height: 40%;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 3%;
+    text-align: center;
+    vertical-align: center;
+}
+
+#choices button span {
+    font-size: xx-large;
+}
+
+button.blue, #images :nth-child(1), #choices :nth-child(1) {
     background: linear-gradient(to bottom right, cornflowerblue, blue);
 }
 
-button.yellow {
+button.yellow, #images :nth-child(2), #choices :nth-child(2) {
     background: linear-gradient(to bottom right, yellow, goldenrod);
 }
 
-button.red {
+button.red, #images :nth-child(3), #choices :nth-child(3) {
     background: linear-gradient(to bottom right, red, darkred);
 }
 
-button.green {
+button.green, #images :nth-child(4), #choices :nth-child(4) {
     background: linear-gradient(to bottom right, greenyellow, green);
 }
 
@@ -72,6 +113,8 @@ button.green {
     background: white;
     padding: 30px;
     border-radius: 30px;
+    display: inline-block;
+    border: 2px red solid;
 }
 
     #wellDone span {

@@ -41,7 +41,6 @@
 
             var wellDoneMessages = [
                 'Well done!',
-                "That's the one!",
                 "Nice!"
             ]
 
@@ -55,17 +54,25 @@
                 var message = arrayHelpers.randomElement(wellDoneMessages);
                 self.WellDoneMessage(message);
 
-                // $('body').fireworks('init');
-
-                // setTimeout(function(){
-                //     self.WellDoneMessage(undefined);
-                //     $('body').fireworks('destroy');
-                // }, 5000)
+                setTimeout(function(){
+                    self.WellDoneMessage(undefined);
+                }, 5000)
             }
             else{
                 var message = arrayHelpers.randomElement(tryAgainMessages);
                 window.speechSynthesis.speak(new SpeechSynthesisUtterance(message))
             }
+        }
+
+        self.Color = function(index){
+            var colors = [
+                'yellow',
+                'red',
+                'blue',
+                'green'
+            ];
+
+            return colors[index];
         }
 
         self.RandomColor = function() {
