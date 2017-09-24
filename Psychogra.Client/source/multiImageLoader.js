@@ -24,14 +24,14 @@
 
             var item = self.Game().mainItem().label;
 
-            var instructions = [
-                'Which is the ' + item + '?',
-                'Can you find the ' + item + '?'
-            ];
+            // var instructions = [
+            //     'Which is the ' + item + '?',
+            //     'Can you find the ' + item + '?'
+            // ];
 
-            var instruction = arrayHelpers.randomElement(instructions);
+            // var instruction = arrayHelpers.randomElement(instructions);
 
-            self.Instruction(instruction);
+            self.Instruction(item);
         }
 
         self.ChooseOption = function (choice) {
